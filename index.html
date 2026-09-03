@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GDPR Account Auditor</title>
+<meta name="description" content="Find forgotten online accounts by scanning your own inbox, locally. Email bodies never leave your device.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>GDPR Account Auditor</h1>
+  <p class="lede">Find the online accounts you've forgotten about, then exercise your GDPR rights over them. Your email is scanned on your own machine and never uploaded.</p>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="privacy.html">Privacy policy</a>
+    <a href="terms.html">Terms of service</a>
+  </nav>
+</header>
+
+<h2>What it does</h2>
+<p>Over years of using the web you sign up to hundreds of services and forget nearly all of them. Each one still holds your personal data. The evidence is sitting in your inbox: the "verify your email", the "welcome to", the password reset you never asked for.</p>
+<p>The Account Auditor reads those signals from your Gmail account and produces a list of the companies that hold data about you, with the date each account first appeared. From there you can generate a request under Article 15 (access) or Article 17 (erasure) of the GDPR.</p>
+
+<h2>How your email is handled</h2>
+<div class="card">
+  <p><strong>Email bodies never leave your device, and are never written to disk.</strong> This is enforced in the code, not promised in a policy:</p>
+  <ul>
+    <li>The app requests Gmail's read-only permission and nothing else. It cannot send, modify or delete mail.</li>
+    <li>It asks Google only for message <em>headers</em> — sender, subject, date — never message content.</li>
+    <li>The data structures that carry a message have no field capable of holding a body.</li>
+    <li>Everything is stored in a database file on your own computer. There is no server to receive it.</li>
+  </ul>
+  <p>The full detail is in the <a href="privacy.html">privacy policy</a>.</p>
+</div>
+
+<h2>What gets stored</h2>
+<div class="scroll">
+<table>
+  <tr><th>Stored on your device</th><th>Never stored anywhere</th></tr>
+  <tr>
+    <td>Company domain (e.g. <code>example.com</code>)</td>
+    <td>Message bodies</td>
+  </tr>
+  <tr>
+    <td>Company display name</td>
+    <td>Subject lines</td>
+  </tr>
+  <tr>
+    <td>First and last date seen</td>
+    <td>Attachments</td>
+  </tr>
+  <tr>
+    <td>A confidence score</td>
+    <td>Message identifiers</td>
+  </tr>
+  <tr>
+    <td>Your Google sign-in token, in your operating system's keychain</td>
+    <td>Contacts or recipients</td>
+  </tr>
+</table>
+</div>
+
+<h2>Open source</h2>
+<p>The scanner, the storage layer and the interface are all open to inspection, so the claims above can be checked rather than taken on trust.</p>
+
+<footer>
+  <p>GDPR Account Auditor is an independent tool. It is not affiliated with or endorsed by Google.</p>
+  <p>Nothing here is legal advice. The request templates are a starting point, not a guarantee of any outcome.</p>
+</footer>
+</div>
+</body>
+</html>

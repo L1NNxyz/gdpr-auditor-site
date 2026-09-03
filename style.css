@@ -1,0 +1,54 @@
+/* Shared styles. Deliberately one small file, no build step, no CDN -- these
+   pages must stay reachable and readable for as long as the OAuth client
+   points at them. */
+:root {
+  --ground: #f4f6f8;
+  --surface: #ffffff;
+  --ink: #16202b;
+  --muted: #5b6b7c;
+  --accent: #1c5c9e;
+  --rule: #dde3ea;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground: #0f151c;
+    --surface: #161f29;
+    --ink: #e6edf4;
+    --muted: #8fa3b6;
+    --accent: #6cabe4;
+    --rule: #26313d;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.wrap { max-width: 46rem; margin: 0 auto; padding: 3rem 1.25rem 5rem; }
+header { border-bottom: 1px solid var(--rule); padding-bottom: 1.5rem; margin-bottom: 2.5rem; }
+nav { display: flex; gap: 1.25rem; font-size: .9rem; margin-top: .75rem; flex-wrap: wrap; }
+nav a { color: var(--muted); text-decoration: none; }
+nav a:hover, nav a:focus-visible { color: var(--accent); text-decoration: underline; }
+h1 { font-size: 1.9rem; line-height: 1.2; margin: 0; text-wrap: balance; }
+h2 { font-size: 1.2rem; margin: 2.5rem 0 .75rem; text-wrap: balance; }
+h3 { font-size: 1rem; margin: 1.75rem 0 .5rem; }
+p, li { color: var(--ink); }
+.lede { font-size: 1.1rem; color: var(--muted); margin-top: .75rem; }
+.card {
+  background: var(--surface); border: 1px solid var(--rule);
+  border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: .9em; background: var(--ground); padding: .1em .35em;
+  border-radius: 3px; border: 1px solid var(--rule);
+}
+table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .95rem; }
+th, td { text-align: left; padding: .6rem .5rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; color: var(--muted); font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; }
+.scroll { overflow-x: auto; }
+footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); color: var(--muted); font-size: .875rem; }
+a { color: var(--accent); }
+.updated { color: var(--muted); font-size: .875rem; }

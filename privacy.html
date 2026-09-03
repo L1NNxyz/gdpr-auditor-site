@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy policy — GDPR Account Auditor</title>
+<meta name="description" content="How the GDPR Account Auditor handles your email: locally, with message bodies never transmitted or stored.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Privacy policy</h1>
+  <p class="updated">Last updated: 3 September 2026</p>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="privacy.html">Privacy policy</a>
+    <a href="terms.html">Terms of service</a>
+  </nav>
+</header>
+
+<h2>Summary</h2>
+<div class="card">
+  <p>The GDPR Account Auditor runs entirely on your own computer. It reads your Gmail with read-only permission, extracts the names of companies you hold accounts with, and stores that list in a file on your device.</p>
+  <p><strong>No email content is transmitted to us or to anyone else. We operate no server that receives your data, and we have no access to it.</strong></p>
+</div>
+
+<h2>Who is responsible</h2>
+<p>The application is software you run yourself. Because your data stays on your device and is never sent to us, we do not act as a data controller or processor in respect of the email data you process with it. You remain in control of that data throughout.</p>
+<p>Questions about this policy can be sent to the contact address shown on the consent screen when you sign in.</p>
+
+<h2>What the application accesses</h2>
+
+<h3>Google account permission</h3>
+<p>The application requests a single Google permission:</p>
+<p><code>https://www.googleapis.com/auth/gmail.readonly</code></p>
+<p>This grants read-only access to Gmail messages and settings. It does not permit sending, modifying or deleting mail, and the application contains no code capable of doing so. No other Google permission is requested.</p>
+
+<h3>What it reads</h3>
+<p>The application asks Gmail to return only these message headers:</p>
+<ul>
+  <li><strong>From</strong> — to identify the sending company</li>
+  <li><strong>Subject</strong> — to recognise signup and verification mail</li>
+  <li><strong>Date</strong> — to record when an account first appeared</li>
+  <li><strong>List-Unsubscribe</strong> — to distinguish automated senders</li>
+  <li><strong>DKIM-Signature</strong> and <strong>Authentication-Results</strong> — to identify which company actually sent a message, so several sending addresses collapse into one company</li>
+</ul>
+<p>Message bodies are never requested. Where a message is ambiguous, the application may read Gmail's short preview snippet to decide whether it indicates an account. That snippet is used to compute a score and is then discarded: it is not stored, not logged, and not transmitted.</p>
+
+<h2>What is stored, and where</h2>
+<p>Everything is stored on your own device, in a database file inside your user account's application data directory.</p>
+<div class="scroll">
+<table>
+  <tr><th>Data</th><th>Purpose</th><th>Location</th></tr>
+  <tr><td>Company domain</td><td>Identify who holds your data</td><td>Local database file</td></tr>
+  <tr><td>Company display name</td><td>Show a readable name</td><td>Local database file</td></tr>
+  <tr><td>First and last seen dates</td><td>Show how long the account has existed</td><td>Local database file</td></tr>
+  <tr><td>Confidence score</td><td>Rank results and flag uncertain ones</td><td>Local database file</td></tr>
+  <tr><td>Google refresh token</td><td>Reconnect without signing in each time</td><td>Operating system credential store</td></tr>
+</table>
+</div>
+<p>The sign-in token is held in your operating system's keychain — Windows Credential Manager, macOS Keychain, or the Linux secret service — and is never written to a plain file.</p>
+
+<h2>What is never stored</h2>
+<ul>
+  <li>Message bodies, in whole or in part</li>
+  <li>Subject lines</li>
+  <li>Attachments</li>
+  <li>Message identifiers</li>
+  <li>Contacts, recipients, or your address book</li>
+  <li>Your Google password, which the application never sees</li>
+</ul>
+<p>The application writes no diagnostic log containing email addresses: where an address would appear in a log line, it is replaced by a one-way hash before that line is written.</p>
+
+<h2>Sharing and disclosure</h2>
+<p>None. The application performs no analytics, sends no telemetry, contains no advertising or tracking code, and makes no network request other than to Google's Gmail API to read your mail and to Google's OAuth endpoints to sign you in.</p>
+<p>We do not sell, rent or share your data, because we never receive it.</p>
+
+<h2>Retention and deletion</h2>
+<p>Data is kept until you delete it, and you control both stores:</p>
+<ul>
+  <li><strong>The account list</strong> — delete the application's database file, or use the application's own delete function.</li>
+  <li><strong>The sign-in token</strong> — sign out within the application, which removes the entry from your keychain.</li>
+  <li><strong>Google's permission</strong> — revoke access at any time at <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>. This takes effect immediately and independently of the application.</li>
+</ul>
+
+<h2>Limited Use disclosure</h2>
+<p>The application's use and transfer of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including its Limited Use requirements.</p>
+<p>Specifically, data obtained from Gmail is used solely to identify services you hold accounts with, for your own use within the application. It is not transferred to any third party, not used for advertising, not used to train any model, and not read by any human.</p>
+
+<h2>Children</h2>
+<p>The application is not directed at children under 16 and should not be used by them without the consent of a parent or guardian.</p>
+
+<h2>Changes</h2>
+<p>If this policy changes materially, the date at the top of this page will be updated. Because the application runs on your own device, you can also verify its behaviour directly in its source code rather than relying on this description.</p>
+
+<footer>
+  <p>GDPR Account Auditor is an independent tool. It is not affiliated with or endorsed by Google.</p>
+</footer>
+</div>
+</body>
+</html>
