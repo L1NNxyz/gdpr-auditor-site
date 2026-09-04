@@ -11,7 +11,7 @@
 <div class="wrap">
 <header>
   <h1>Privacy policy</h1>
-  <p class="updated">Last updated: 3 September 2026</p>
+  <p class="updated">Last updated: 4 September 2026</p>
   <nav>
     <a href="index.html">Home</a>
     <a href="privacy.html">Privacy policy</a>
@@ -40,12 +40,53 @@
 <p>The application asks Gmail to return only these message headers:</p>
 <ul>
   <li><strong>From</strong> — to identify the sending company</li>
-  <li><strong>Subject</strong> — to recognise signup and verification mail</li>
+  <li><strong>Subject</strong> — to recognise mail that indicates an account (see below)</li>
   <li><strong>Date</strong> — to record when an account first appeared</li>
   <li><strong>List-Unsubscribe</strong> — to distinguish automated senders</li>
   <li><strong>DKIM-Signature</strong> and <strong>Authentication-Results</strong> — to identify which company actually sent a message, so several sending addresses collapse into one company</li>
 </ul>
 <p>Message bodies are never requested. Where a message is ambiguous, the application may read Gmail's short preview snippet to decide whether it indicates an account. That snippet is used to compute a score and is then discarded: it is not stored, not logged, and not transmitted.</p>
+
+<h3>Which mail it looks at</h3>
+<p>Before anything is read, Gmail is asked to return only messages whose sender or subject suggests an account. Everything else in your mailbox is never examined. The application looks for:</p>
+<div class="scroll">
+<table>
+  <tr><th>Kind of mail</th><th>Why it indicates an account</th></tr>
+  <tr>
+    <td>Signup and verification &mdash; <em>verify your email, welcome to, activate your account, reset your password</em></td>
+    <td>Sent when an account is created</td>
+  </tr>
+  <tr>
+    <td>Security &mdash; <em>verification code, security code, sign-in attempt, new device, two-factor</em></td>
+    <td>A code is issued to an account holder; there is no mailing-list version</td>
+  </tr>
+  <tr>
+    <td>Subscriptions and membership &mdash; <em>your subscription, your plan, renewal, free trial, membership, loyalty, rewards</em></td>
+    <td>A subscription or membership is an account</td>
+  </tr>
+  <tr>
+    <td>Account management &mdash; <em>change your password, your profile, your settings</em></td>
+    <td>Presupposes a profile already exists</td>
+  </tr>
+  <tr>
+    <td>Purchases &mdash; <em>your order, order confirmation, receipt, invoice</em></td>
+    <td>Suggests a customer relationship, though a guest checkout leaves no account</td>
+  </tr>
+  <tr>
+    <td>Delivery &mdash; <em>has shipped, out for delivery, tracking</em></td>
+    <td>Weakest signal, and treated as such</td>
+  </tr>
+  <tr>
+    <td>Policy updates &mdash; <em>terms of service, privacy policy</em></td>
+    <td>Sent to account holders, though also to subscribers</td>
+  </tr>
+  <tr>
+    <td>Sender address &mdash; <em>no-reply@, accounts@, billing@, orders@, member@</em></td>
+    <td>Indicates automated mail from a company rather than a person</td>
+  </tr>
+</table>
+</div>
+<p>Each match adds to a score, and a company is only listed when the score passes a threshold. The score, and the reasons behind it, are shown in the application under <strong>How sure</strong>. This list is part of the application's source code and can be read there in full.</p>
 
 <h2>What is stored, and where</h2>
 <p>Everything is stored on your own device, in a database file inside your user account's application data directory.</p>
@@ -56,6 +97,8 @@
   <tr><td>Company display name</td><td>Show a readable name</td><td>Local database file</td></tr>
   <tr><td>First and last seen dates</td><td>Show how long the account has existed</td><td>Local database file</td></tr>
   <tr><td>Confidence score</td><td>Rank results and flag uncertain ones</td><td>Local database file</td></tr>
+  <tr><td>Which rules matched</td><td>Explain why a company was listed, e.g. &ldquo;asked you to verify your email&rdquo;</td><td>Local database file</td></tr>
+  <tr><td>A scan position marker</td><td>Resume an interrupted scan without starting again</td><td>Local database file</td></tr>
   <tr><td>Google refresh token</td><td>Reconnect without signing in each time</td><td>Operating system credential store</td></tr>
 </table>
 </div>
