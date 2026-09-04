@@ -131,8 +131,23 @@
 </div>
 <p>Addresses found this way are marked <strong>unchecked</strong>, because reading a page is not the same as confirming an address. You never have to use the feature at all: links to open those pages yourself are shown alongside.</p>
 
+<h2>Optional: a language model on your own computer</h2>
+<p>Deciding whether an email indicates an account, or finding a contact address written into a sentence rather than printed as a link, is a reading task that pattern matching does badly. The application can use a small language model for those two jobs &mdash; but only one that is already installed on your own computer, and only if you chose to install it.</p>
+<div class="card">
+  <p><strong>No model is bundled with the application, and nothing is downloaded, installed or started on your behalf.</strong></p>
+  <ul>
+    <li><strong>Detected, never provided.</strong> If <a href="https://ollama.com">Ollama</a> is running locally with a model available, the application uses it. If not &mdash; which is the ordinary case &mdash; it works exactly as it otherwise would, using its published scoring rules alone.</li>
+    <li><strong>It runs on your machine.</strong> What is sent to it goes to a program listening on <code>127.0.0.1</code>, your own computer, and leaves the device at no point.</li>
+    <li><strong>What it is shown:</strong> the subject line and sender of a message the scoring rules could not decide, or the visible text of a company privacy page already fetched for the contact lookup described above.</li>
+    <li><strong>Nothing is kept.</strong> The application stores the model's answer &mdash; a yes or no, or an address &mdash; and never the text it was shown.</li>
+    <li><strong>No hosted service is used for this, and none can be configured.</strong> Your subject lines are your mail; and even the sequence of privacy pages the application reads would tell an outside provider precisely which companies you hold accounts with. Both were reasons to keep this local rather than convenient.</li>
+    <li><strong>The model is not trusted with an address.</strong> It may only point at one already printed on the page; anything it invents is discarded, and it is asked whose contact it is so that a partner's or a content network's address is not offered as the company's own.</li>
+  </ul>
+</div>
+<p>Nothing about this feature is used to train anything. It is inference on your own hardware: no data is contributed to any model, by us or by anyone else.</p>
+
 <h2>Sharing and disclosure</h2>
-<p>None. The application performs no analytics, sends no telemetry, and contains no advertising or tracking code. Apart from the contact lookup described above, which runs only on your instruction, it makes no network request other than to Google's Gmail API to read your mail and to Google's OAuth endpoints to sign you in.</p>
+<p>None. The application performs no analytics, sends no telemetry, and contains no advertising or tracking code. Apart from the contact lookup described above, which runs only on your instruction, it makes no network request other than to Google's Gmail API to read your mail and to Google's OAuth endpoints to sign you in. Where a local language model is in use, the application also connects to <code>127.0.0.1</code> on your own computer; that traffic reaches no network and no other party.</p>
 <p>We do not sell, rent or share your data, because we never receive it.</p>
 
 <h2>Retention and deletion</h2>
