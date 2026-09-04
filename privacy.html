@@ -115,8 +115,22 @@
 </ul>
 <p>The application writes no diagnostic log containing email addresses: where an address would appear in a log line, it is replaced by a one-way hash before that line is written.</p>
 
+<h2>Looking up a company's privacy contact</h2>
+<p>Companies must publish a contact for data requests, but there is no central list of them. If you press <strong>Find it for me</strong> on a company, the application opens that company's own privacy page and looks for the address.</p>
+<div class="card">
+  <p><strong>This is the only time the application contacts anything other than Google, and it happens only when you press that button.</strong></p>
+  <ul>
+    <li>One company at a time, never in bulk and never during a scan.</li>
+    <li>Only pages the company publishes for exactly this purpose.</li>
+    <li>Nothing about you is sent: no identifier, no mailbox data, and not which other companies you hold accounts with. The request carries no cookies and no referrer.</li>
+    <li>Nothing is saved until you choose an address from what it found.</li>
+  </ul>
+  <p>The alternative was asking you to open those same pages in your own browser. This makes the same request, carrying less.</p>
+</div>
+<p>You never have to use it. Links to open those pages yourself are shown alongside.</p>
+
 <h2>Sharing and disclosure</h2>
-<p>None. The application performs no analytics, sends no telemetry, contains no advertising or tracking code, and makes no network request other than to Google's Gmail API to read your mail and to Google's OAuth endpoints to sign you in.</p>
+<p>None. The application performs no analytics, sends no telemetry, and contains no advertising or tracking code. Apart from the contact lookup described above, which runs only on your instruction, it makes no network request other than to Google's Gmail API to read your mail and to Google's OAuth endpoints to sign you in.</p>
 <p>We do not sell, rent or share your data, because we never receive it.</p>
 
 <h2>Retention and deletion</h2>
