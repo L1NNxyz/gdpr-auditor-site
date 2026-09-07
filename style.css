@@ -52,3 +52,17 @@ th { font-weight: 600; color: var(--muted); font-size: .85rem; text-transform: u
 footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); color: var(--muted); font-size: .875rem; }
 a { color: var(--accent); }
 .updated { color: var(--muted); font-size: .875rem; }
+
+/* The language switch sits at the end of the nav and is pulled away from
+   the page links, because it is a different kind of choice. */
+nav a.lang { margin-left: auto; font-weight: 600; }
+@media (max-width: 32rem) { nav a.lang { margin-left: 0; } }
+
+/* Says which version governs. German law applies to the provider, so the
+   German text is authoritative and the English is a courtesy -- a reader
+   is entitled to know which one binds them. */
+.note {
+  font-size: .875rem; color: var(--muted);
+  border-left: 3px solid var(--rule); padding: .1rem 0 .1rem .9rem; margin: 0 0 2rem;
+}
+hr { border: none; border-top: 1px solid var(--rule); margin: 3rem 0 0; }
