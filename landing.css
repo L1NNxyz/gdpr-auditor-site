@@ -359,6 +359,93 @@ footer img { width: 128px; height: auto; display: block; margin-bottom: .8rem; }
   .logo-dark { display: block; }
 }
 
+/* ══ Touch and small screens ═══════════════════════════════════════
+   Most visitors arrive by scanning a QR code, so this is the common
+   case rather than the fallback. Everything below either fixes
+   something that silently does nothing on a phone, or buys back
+   vertical space, which is the scarce resource on a small screen. */
+
+/* Stagger belongs in CSS, not in the observer callback. On a phone
+   cards cross the threshold one at a time, so an index-based delay
+   computed per batch collapses to zero and they all arrive flat. */
+.steps .step:nth-child(2),
+.figures .figure:nth-child(2),
+.rights .right-card:nth-child(2),
+.split .panel:nth-child(2) { transition-delay: .09s; }
+.steps .step:nth-child(3),
+.figures .figure:nth-child(3) { transition-delay: .18s; }
+
+/* The lifts above are all :hover, which never fires on touch -- so on a
+   phone every card was inert. Swap in a press response instead. */
+@media (hover: none) {
+  .step:hover, .right-card:hover, .btn-primary:hover { transform: none; }
+  .step:active, .right-card:active, .panel:active { transform: scale(.985); }
+  .btn:active { transform: scale(.97); }
+  .step, .right-card, .panel, .btn { transition: transform .12s ease, box-shadow .25s ease; }
+}
+
+/* The grey flash Safari and Chrome paint over a tapped link makes a
+   considered layout look cheap. */
+* { -webkit-tap-highlight-color: transparent; }
+
+/* Keeps content clear of the notch and the home indicator in landscape
+   without pushing everything in on a normal screen. */
+.wrap {
+  padding-left: max(1.25rem, env(safe-area-inset-left));
+  padding-right: max(1.25rem, env(safe-area-inset-right));
+}
+
+/* Reading progress. On a long page reached by a QR code it is the one
+   piece of chrome worth keeping on screen -- it tells a thumb how much
+   is left. Transform-only, so it never triggers layout. */
+.progress {
+  position: fixed; inset: 0 0 auto 0; height: 3px; z-index: 60;
+  background: var(--brand-gradient);
+  transform: scaleX(0); transform-origin: 0 50%;
+  will-change: transform;
+}
+
+.window {
+  opacity: 0; transform: translateY(16px) scale(.985);
+  animation: window-in .85s .2s cubic-bezier(.22,.9,.3,1) forwards;
+}
+@keyframes window-in { to { opacity: 1; transform: none; } }
+
+@media (max-width: 48rem) {
+  /* 46rem blooms are a lot of pixels to repaint every frame on a phone
+     GPU. Smaller costs nothing visually at this width. */
+  .hero::before, .hero::after { width: 26rem; height: 26rem; opacity: .34; }
+  .hero::before { top: -13rem; left: -9rem; }
+  .hero::after { top: 1rem; right: -13rem; }
+
+  .hero { padding-bottom: 3.5rem; }
+  .hero-nav { padding-bottom: 2.25rem; }
+  .hero h1 { font-size: clamp(2.1rem, 8.6vw, 3rem); }
+  .hero-lede { font-size: 1.02rem; }
+  .section-head { margin-bottom: 2rem; }
+  .section-head h2 { font-size: clamp(1.55rem, 6.4vw, 2.1rem); }
+}
+
+/* Three stacked squares cost most of a screen each and say very little.
+   Laid on their side the number and its label read as one line. */
+@media (max-width: 44rem) {
+  .figures { gap: .7rem; }
+  .figure {
+    display: flex; align-items: center; gap: 1rem;
+    text-align: left; padding: 1.1rem 1.2rem;
+  }
+  .figure b { font-size: 2.1rem; line-height: 1; flex: none; min-width: 3.2ch; }
+  .figure span { font-size: .88rem; }
+}
+
+/* Side-by-side buttons on a narrow screen leave two cramped targets. */
+@media (max-width: 26rem) {
+  .cta-row { flex-direction: column; align-items: stretch; gap: .6rem; }
+  .btn { justify-content: center; padding: .95rem 1.5rem; }
+  .row-when { display: none; }
+  .foot-links { gap: .5rem 1rem; }
+}
+
 /* Motion is decoration here; every animation above only moves or fades
    something that is already in its final position and readable. */
 @media (prefers-reduced-motion: reduce) {
@@ -370,4 +457,6 @@ footer img { width: 128px; height: auto; display: block; margin-bottom: .8rem; }
   }
   .reveal { opacity: 1; transform: none; }
   .row { opacity: 1; transform: none; }
+  .window { opacity: 1; transform: none; animation: none; }
+  .progress { display: none; }
 }
