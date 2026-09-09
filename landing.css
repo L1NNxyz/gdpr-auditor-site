@@ -1,0 +1,373 @@
+/* Landing page styles.
+ *
+ * Separate from style.css on purpose. That file is loaded by the legal
+ * pages, whose URLs are registered with the Google OAuth client and must
+ * keep rendering exactly as they do; nothing here can reach them.
+ *
+ * No build step and no CDN, matching the rest of the site. The palette is
+ * sampled from the logo itself rather than approximated: the shield runs
+ * #1BC7B5 at the top through #227DA1 to #353998 at the tip.
+ *
+ * Most visitors arrive by scanning a QR code, so this is written for a
+ * phone first and widened at breakpoints.
+ */
+
+:root {
+  --teal: #1BC7B5;
+  --sea: #227DA1;
+  --indigo: #3F53A9;
+  --deep: #353998;
+  --navy: #14143C;
+
+  --ground: #ffffff;
+  --raised: #f7f8fc;
+  --ink: #14143C;
+  --muted: #5a6280;
+  --rule: #e4e7f2;
+
+  --brand-gradient: linear-gradient(120deg, var(--teal), var(--sea) 45%, var(--deep));
+
+  --shadow-sm: 0 1px 2px rgba(20, 20, 60, .06), 0 2px 8px rgba(20, 20, 60, .04);
+  --shadow-md: 0 4px 12px rgba(20, 20, 60, .07), 0 16px 40px rgba(20, 20, 60, .07);
+
+  --measure: 68rem;
+  --step: clamp(3.5rem, 9vw, 7rem);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground: #0d0f1f;
+    --raised: #151830;
+    --ink: #e9ecf7;
+    --muted: #9aa3c4;
+    --rule: #262a45;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, .4);
+    --shadow-md: 0 8px 30px rgba(0, 0, 0, .45);
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.wrap { width: 100%; max-width: var(--measure); margin: 0 auto; padding: 0 1.25rem; }
+
+h1, h2, h3 { text-wrap: balance; letter-spacing: -.02em; line-height: 1.12; margin: 0; }
+p { margin: 0; }
+
+.eyebrow {
+  font-size: .78rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--muted);
+}
+
+/* ── Hero ──────────────────────────────────────────────────────────
+   Dark regardless of the visitor's theme. The product is about taking
+   something back, and the page should open with some weight to it. */
+.hero {
+  position: relative;
+  background: #0a0c1c;
+  color: #eef1fb;
+  padding: 2rem 0 var(--step);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Two slow-drifting blooms of brand colour. Cheap to paint -- no
+   filters or blend modes -- and they keep the flat navy from reading
+   as a dead rectangle behind the text. */
+.hero::before,
+.hero::after {
+  content: ""; position: absolute; z-index: -1;
+  width: 46rem; height: 46rem; border-radius: 50%;
+  opacity: .30; pointer-events: none;
+}
+.hero::before {
+  background: radial-gradient(circle, rgba(27,199,181,.75), transparent 62%);
+  top: -22rem; left: -14rem;
+  animation: drift-a 26s ease-in-out infinite alternate;
+}
+.hero::after {
+  background: radial-gradient(circle, rgba(63,83,169,.85), transparent 62%);
+  top: 4rem; right: -20rem;
+  animation: drift-b 31s ease-in-out infinite alternate;
+}
+@keyframes drift-a { to { transform: translate3d(5rem, 4rem, 0) scale(1.14); } }
+@keyframes drift-b { to { transform: translate3d(-6rem, 3rem, 0) scale(1.09); } }
+
+.hero-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; padding: .35rem 0 3rem;
+}
+.hero-nav img { width: 148px; height: auto; display: block; }
+
+/* The motto sits under the wordmark as a lockup, the way it does in the
+   app's own sidebar, so the two read as the same brand. Indented to the
+   width of the shield so it hangs off the "Reclaim" rather than the mark. */
+.lockup { display: flex; flex-direction: column; }
+/* Pulled up hard against the wordmark. The logo's own bottom edge is the
+   shield, which hangs lower than the "Reclaim" text, so aligning to the
+   image leaves a gap under the word that has to be taken back. */
+.motto {
+  margin-top: -.55rem;
+  padding-left: 44px;
+  font-size: .7rem; font-weight: 700; letter-spacing: .18em; line-height: 1;
+  text-transform: uppercase; color: var(--teal);
+}
+@media (max-width: 30rem) {
+  .hero-nav img { width: 124px; }
+  .motto { margin-top: -.45rem; padding-left: 37px; font-size: .64rem; letter-spacing: .15em; }
+}
+.hero-nav a {
+  color: rgba(238,241,251,.72); text-decoration: none;
+  font-size: .9rem; font-weight: 600;
+  transition: color .2s ease;
+}
+.hero-nav a:hover, .hero-nav a:focus-visible { color: #fff; }
+
+.hero-grid { display: grid; gap: 3rem; align-items: center; }
+@media (min-width: 62rem) {
+  .hero-grid { grid-template-columns: 1fr 1fr; gap: 4rem; }
+}
+
+.hero h1 {
+  font-size: clamp(2.3rem, 7.5vw, 3.9rem);
+  font-weight: 800;
+  margin-bottom: 1.1rem;
+}
+/* The gradient sits on the one phrase that carries the promise. */
+.grad {
+  background: linear-gradient(100deg, var(--teal), #6f8cff);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+}
+.hero-lede {
+  font-size: clamp(1.05rem, 2.4vw, 1.22rem);
+  color: rgba(238,241,251,.76); max-width: 34rem; margin-bottom: 2rem;
+}
+
+.cta-row { display: flex; flex-wrap: wrap; gap: .8rem; align-items: center; }
+.btn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .85rem 1.5rem; border-radius: 10px;
+  font-weight: 700; font-size: .97rem; text-decoration: none;
+  border: 1px solid transparent; cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.btn-primary {
+  background: var(--brand-gradient); color: #fff;
+  box-shadow: 0 6px 22px rgba(53,57,152,.45);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(53,57,152,.55); }
+.btn-ghost { color: #eef1fb; border-color: rgba(238,241,251,.22); }
+.btn-ghost:hover { background: rgba(238,241,251,.08); }
+
+.hero-note {
+  margin-top: 1.4rem; font-size: .87rem; color: rgba(238,241,251,.52);
+  display: flex; align-items: center; gap: .5rem;
+}
+.dot-live {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--teal);
+  box-shadow: 0 0 0 0 rgba(27,199,181,.65);
+  animation: pulse 2.4s ease-out infinite;
+}
+@keyframes pulse {
+  70% { box-shadow: 0 0 0 9px rgba(27,199,181,0); }
+  100% { box-shadow: 0 0 0 0 rgba(27,199,181,0); }
+}
+
+/* ── The app window in the hero ────────────────────────────────────
+   A recreation, not a screenshot: it stays sharp at any width, and the
+   rows can animate in the way they do during a real scan. */
+.window {
+  background: #12142c; border: 1px solid rgba(238,241,251,.11);
+  border-radius: 14px; box-shadow: 0 24px 70px rgba(0,0,0,.5);
+  overflow: hidden;
+}
+.window-bar {
+  display: flex; align-items: center; gap: .45rem;
+  padding: .7rem .9rem; border-bottom: 1px solid rgba(238,241,251,.08);
+  background: rgba(238,241,251,.03);
+}
+.window-bar i { width: 10px; height: 10px; border-radius: 50%; background: rgba(238,241,251,.18); }
+.window-title {
+  margin-left: .5rem; font-size: .78rem; color: rgba(238,241,251,.45);
+  font-weight: 600;
+}
+.window-body { padding: 1rem .9rem 1.15rem; }
+
+.counter-row {
+  display: flex; align-items: baseline; gap: .6rem; padding: 0 .3rem .9rem;
+}
+.counter {
+  font-size: 2.1rem; font-weight: 800; letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums; color: #fff;
+}
+.counter-label { font-size: .82rem; color: rgba(238,241,251,.5); }
+
+.rows { display: flex; flex-direction: column; gap: .3rem; }
+.row {
+  display: flex; align-items: center; gap: .7rem;
+  padding: .5rem .55rem; border-radius: 9px;
+  opacity: 0; transform: translateY(9px);
+}
+.row.in { animation: row-in .5s cubic-bezier(.22,.9,.3,1) forwards; }
+@keyframes row-in { to { opacity: 1; transform: none; } }
+.row-mark {
+  width: 30px; height: 30px; border-radius: 8px; flex: none;
+  display: grid; place-items: center;
+}
+.row-mark svg { width: 58%; height: 58%; display: block; }
+.row-name { font-size: .87rem; font-weight: 600; color: #eef1fb; line-height: 1.2; }
+.row-domain { font-size: .74rem; color: rgba(238,241,251,.42); }
+.row-when { margin-left: auto; font-size: .72rem; color: rgba(238,241,251,.38); white-space: nowrap; }
+
+/* ── Sections ──────────────────────────────────────────────────────*/
+section { padding: var(--step) 0; }
+.section-head { max-width: 40rem; margin-bottom: 3rem; }
+.section-head h2 { font-size: clamp(1.7rem, 4.4vw, 2.5rem); margin: .7rem 0 .9rem; }
+.section-head p { color: var(--muted); font-size: 1.05rem; }
+
+.alt { background: var(--raised); }
+
+/* ── Scroll reveals ────────────────────────────────────────────────*/
+.reveal { opacity: 0; transform: translateY(18px); }
+.reveal.shown {
+  opacity: 1; transform: none;
+  transition: opacity .6s ease, transform .6s cubic-bezier(.22,.9,.3,1);
+}
+
+/* ── Steps ─────────────────────────────────────────────────────────*/
+.steps { display: grid; gap: 1.1rem; }
+@media (min-width: 50rem) { .steps { grid-template-columns: repeat(3, 1fr); } }
+.step {
+  position: relative; background: var(--ground); border: 1px solid var(--rule);
+  border-radius: 14px; padding: 1.6rem 1.4rem 1.5rem; box-shadow: var(--shadow-sm);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.step:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.step-n {
+  display: grid; place-items: center; width: 2.2rem; height: 2.2rem;
+  border-radius: 9px; background: var(--brand-gradient); color: #fff;
+  font-weight: 800; font-size: .95rem; margin-bottom: 1rem;
+}
+.step h3 { font-size: 1.12rem; margin-bottom: .5rem; }
+.step p { color: var(--muted); font-size: .95rem; }
+
+/* ── The privacy split ─────────────────────────────────────────────*/
+.split { display: grid; gap: 1.1rem; }
+@media (min-width: 50rem) { .split { grid-template-columns: 1fr 1fr; } }
+.panel {
+  border-radius: 14px; padding: 1.6rem 1.5rem; border: 1px solid var(--rule);
+  background: var(--ground); box-shadow: var(--shadow-sm);
+}
+.panel h3 { font-size: 1.05rem; display: flex; align-items: center; gap: .55rem; margin-bottom: 1.1rem; }
+.panel ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .7rem; }
+.panel li { display: flex; align-items: flex-start; gap: .65rem; font-size: .95rem; }
+.panel li svg { flex: none; margin-top: .18rem; }
+.panel-keep { border-color: rgba(27,199,181,.4); }
+.panel-never { border-color: rgba(214,69,90,.32); }
+.tick { color: #12a594; }
+.cross { color: #d6455a; }
+
+.enforced {
+  margin-top: 1.6rem; padding: 1.1rem 1.3rem; border-radius: 12px;
+  background: var(--raised); border: 1px solid var(--rule);
+  font-size: .95rem; color: var(--muted);
+}
+.enforced strong { color: var(--ink); }
+
+/* ── Numbers ───────────────────────────────────────────────────────*/
+.figures { display: grid; gap: 1.1rem; }
+@media (min-width: 44rem) { .figures { grid-template-columns: repeat(3, 1fr); } }
+.figure {
+  text-align: center; padding: 1.7rem 1rem;
+  border-radius: 14px; background: var(--ground);
+  border: 1px solid var(--rule); box-shadow: var(--shadow-sm);
+}
+.figure b {
+  display: block; font-size: clamp(2rem, 6vw, 2.8rem); font-weight: 800;
+  letter-spacing: -.03em; font-variant-numeric: tabular-nums;
+  background: var(--brand-gradient);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+}
+.figure span { font-size: .92rem; color: var(--muted); }
+
+/* ── Rights ────────────────────────────────────────────────────────*/
+.rights { display: grid; gap: 1.1rem; }
+@media (min-width: 50rem) { .rights { grid-template-columns: 1fr 1fr; } }
+.right-card {
+  border-radius: 14px; padding: 1.6rem 1.5rem;
+  border: 1px solid var(--rule); background: var(--ground);
+  box-shadow: var(--shadow-sm);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.right-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.article {
+  display: inline-block; font-size: .74rem; font-weight: 800;
+  letter-spacing: .07em; text-transform: uppercase;
+  padding: .3rem .6rem; border-radius: 6px; margin-bottom: .9rem;
+  background: rgba(27,199,181,.14); color: #0e7f72;
+}
+@media (prefers-color-scheme: dark) { .article { background: rgba(27,199,181,.16); color: var(--teal); } }
+.right-card h3 { font-size: 1.15rem; margin-bottom: .5rem; }
+.right-card p { color: var(--muted); font-size: .95rem; }
+
+.deadline {
+  margin-top: 1.6rem; display: flex; align-items: center; gap: .9rem;
+  padding: 1.1rem 1.3rem; border-radius: 12px;
+  border: 1px solid var(--rule); background: var(--raised);
+  font-size: .95rem; color: var(--muted);
+}
+.deadline b { color: var(--ink); }
+
+/* ── Close ─────────────────────────────────────────────────────────*/
+.close-band {
+  background: #0a0c1c; color: #eef1fb; text-align: center;
+  border-radius: 18px; padding: clamp(2.5rem, 7vw, 4rem) 1.5rem;
+  position: relative; overflow: hidden; isolation: isolate;
+}
+.close-band::before {
+  content: ""; position: absolute; inset: -40% -10%; z-index: -1;
+  background: radial-gradient(circle at 30% 20%, rgba(27,199,181,.35), transparent 55%),
+              radial-gradient(circle at 75% 80%, rgba(63,83,169,.45), transparent 55%);
+}
+.close-band h2 { font-size: clamp(1.7rem, 5vw, 2.4rem); margin-bottom: .9rem; }
+.close-band p { color: rgba(238,241,251,.72); max-width: 34rem; margin: 0 auto 1.8rem; }
+
+/* ── Footer ────────────────────────────────────────────────────────*/
+footer { padding: 3rem 0 4rem; border-top: 1px solid var(--rule); margin-top: var(--step); }
+.foot-grid { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: space-between; }
+.foot-links { display: flex; flex-wrap: wrap; gap: 1.1rem; }
+footer a { color: var(--muted); text-decoration: none; font-size: .9rem; }
+footer a:hover { color: var(--ink); text-decoration: underline; }
+.disclaimer { color: var(--muted); font-size: .82rem; max-width: 44rem; margin-top: 1.8rem; }
+footer img { width: 128px; height: auto; display: block; margin-bottom: .8rem; }
+.logo-dark { display: none; }
+@media (prefers-color-scheme: dark) {
+  .logo-light { display: none; }
+  .logo-dark { display: block; }
+}
+
+/* Motion is decoration here; every animation above only moves or fades
+   something that is already in its final position and readable. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+  .row { opacity: 1; transform: none; }
+}

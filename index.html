@@ -3,73 +3,402 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GDPR Account Auditor</title>
-<meta name="description" content="Find forgotten online accounts by scanning your own inbox, locally. Email bodies never leave your device.">
-<link rel="stylesheet" href="style.css">
+<title>Reclaim — find every company that still holds your data</title>
+<meta name="description" content="Reclaim finds the online accounts you have forgotten by reading your own inbox, on your own machine, and helps you exercise your GDPR rights over them. No email content ever leaves your device.">
+<meta name="theme-color" content="#0a0c1c">
+
+<meta property="og:title" content="Reclaim — find every company that still holds your data">
+<meta property="og:description" content="Scan your inbox locally. See who holds your data. Make them hand it back, or delete it.">
+<meta property="og:type" content="website">
+
+<link rel="icon" href="reclaim-logo.png">
+<link rel="stylesheet" href="landing.css">
 </head>
 <body>
-<div class="wrap">
-<header>
-  <h1>GDPR Account Auditor</h1>
-  <p class="lede">Find the online accounts you've forgotten about, then exercise your GDPR rights over them. Your email is scanned on your own machine and never uploaded.</p>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="impressum.html">Impressum</a>
-    <a href="privacy.html">Privacy policy</a>
-    <a href="terms.html">Terms of service</a>
-  </nav>
+
+<!-- ── Hero ──────────────────────────────────────────────────────── -->
+<header class="hero">
+  <div class="wrap">
+    <nav class="hero-nav">
+      <div class="lockup">
+        <img src="reclaim-logo-dark.png" alt="Reclaim" width="440" height="146">
+        <span class="motto">Privacy first</span>
+      </div>
+      <a href="privacy.html">Privacy policy</a>
+    </nav>
+
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">GDPR account auditor</p>
+        <h1>Every company you've forgotten <span class="grad">still has your data</span>.</h1>
+        <p class="hero-lede">
+          Reclaim finds them by reading your inbox on your own machine — then
+          helps you make them hand that data back, or delete it for good.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#how">See how it works</a>
+          <a class="btn btn-ghost" href="#privacy">What it never stores</a>
+        </div>
+
+        <p class="hero-note">
+          <span class="dot-live" aria-hidden="true"></span>
+          Your mail is read on your machine. Nothing is uploaded.
+        </p>
+      </div>
+
+      <!-- A recreation of the app rather than a screenshot, so it stays
+           sharp at any size and can show a scan actually filling up. -->
+      <div class="window" role="img" aria-label="The Reclaim app listing companies discovered in a mailbox: YouTube, Netflix, Spotify and others, with the year each account was first seen.">
+        <div class="window-bar" aria-hidden="true">
+          <i></i><i></i><i></i>
+          <span class="window-title">Reclaim — Discovered accounts</span>
+        </div>
+        <div class="window-body">
+          <div class="counter-row">
+            <span class="counter" id="counter">0</span>
+            <span class="counter-label">companies found in one mailbox</span>
+          </div>
+          <div class="rows" id="rows"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </header>
 
-<h2>What it does</h2>
-<p>Over years of using the web you sign up to hundreds of services and forget nearly all of them. Each one still holds your personal data. The evidence is sitting in your inbox: the "verify your email", the "welcome to", the password reset you never asked for.</p>
-<p>The Account Auditor reads those signals from your Gmail account and produces a list of the companies that hold data about you, with the date each account first appeared. From there you can generate a request under Article 15 (access) or Article 17 (erasure) of the GDPR.</p>
+<!-- ── The problem ───────────────────────────────────────────────── -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">The problem</p>
+      <h2>You signed up. You moved on. The data stayed.</h2>
+      <p>
+        Over years online you create hundreds of accounts and remember a
+        handful. Every one of the rest still holds your name, your email,
+        often your address and card details — and the evidence is sitting in
+        your inbox: the welcome message, the verification link, the password
+        reset you never asked for.
+      </p>
+    </div>
 
-<h2>How your email is handled</h2>
-<div class="card">
-  <p><strong>Email bodies never leave your device, and are never written to disk.</strong> This is enforced in the code, not promised in a policy:</p>
-  <ul>
-    <li>The app requests Gmail's read-only permission and nothing else. It cannot send, modify or delete mail.</li>
-    <li>It asks Google only for message <em>headers</em> — sender, subject, date — never message content.</li>
-    <li>The data structures that carry a message have no field capable of holding a body.</li>
-    <li>Everything is stored in a database file on your own computer. There is no server to receive it.</li>
-  </ul>
-  <p>The full detail is in the <a href="privacy.html">privacy policy</a>.</p>
-</div>
+    <div class="figures">
+      <div class="figure reveal">
+        <b data-count="213">0</b>
+        <span>companies found in one real mailbox during testing</span>
+      </div>
+      <div class="figure reveal">
+        <b>0</b>
+        <span>bytes of email content uploaded anywhere</span>
+      </div>
+      <div class="figure reveal">
+        <b data-count="30">0</b>
+        <span>days a company has to answer you under the GDPR</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-<h2>What gets stored</h2>
-<div class="scroll">
-<table>
-  <tr><th>Stored on your device</th><th>Never stored anywhere</th></tr>
-  <tr>
-    <td>Company domain (e.g. <code>example.com</code>)</td>
-    <td>Message bodies</td>
-  </tr>
-  <tr>
-    <td>Company display name</td>
-    <td>Subject lines</td>
-  </tr>
-  <tr>
-    <td>First and last date seen</td>
-    <td>Attachments</td>
-  </tr>
-  <tr>
-    <td>A confidence score</td>
-    <td>Message identifiers</td>
-  </tr>
-  <tr>
-    <td>Your Google sign-in token, in your operating system's keychain</td>
-    <td>Contacts or recipients</td>
-  </tr>
-</table>
-</div>
+<!-- ── How it works ──────────────────────────────────────────────── -->
+<section id="how" class="alt">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">How it works</p>
+      <h2>Three steps, and the mail never leaves your desk.</h2>
+    </div>
 
-<h2>Open source</h2>
-<p>The scanner, the storage layer and the interface are all open to inspection, so the claims above can be checked rather than taken on trust.</p>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-n">1</div>
+        <h3>Connect your mailbox</h3>
+        <p>
+          Sign in with Google and grant read-only access. Reclaim cannot send,
+          modify or delete anything — the permission it asks for makes that
+          impossible, not merely forbidden.
+        </p>
+      </div>
+      <div class="step reveal">
+        <div class="step-n">2</div>
+        <h3>Scan on your own machine</h3>
+        <p>
+          It reads message headers — who sent it and when — looking for the
+          signatures of an account being created. The scan runs locally and
+          writes its findings to a database file on your computer.
+        </p>
+      </div>
+      <div class="step reveal">
+        <div class="step-n">3</div>
+        <h3>Exercise your rights</h3>
+        <p>
+          For each company, generate a request under Article 15 or Article 17.
+          Reclaim tracks who has replied, who is late, and what you are still
+          owed.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- ── Privacy ───────────────────────────────────────────────────── -->
+<section id="privacy">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Privacy</p>
+      <h2>A tool about your data shouldn't take any.</h2>
+      <p>
+        The point of Reclaim is finding out who holds your information. It
+        would be absurd to become one of them, so the storage layer is built
+        so it cannot.
+      </p>
+    </div>
+
+    <div class="split">
+      <div class="panel panel-keep reveal">
+        <h3>
+          <svg class="tick" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          Kept, on your device
+        </h3>
+        <ul>
+          <li><svg class="tick" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> The company's domain and display name</li>
+          <li><svg class="tick" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> The first and last date it appeared</li>
+          <li><svg class="tick" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> A confidence score for the match</li>
+          <li><svg class="tick" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Your sign-in token, in your operating system's keychain</li>
+        </ul>
+      </div>
+
+      <div class="panel panel-never reveal">
+        <h3>
+          <svg class="cross" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          Never stored, anywhere
+        </h3>
+        <ul>
+          <li><svg class="cross" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg> Message bodies</li>
+          <li><svg class="cross" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg> Subject lines</li>
+          <li><svg class="cross" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg> Attachments</li>
+          <li><svg class="cross" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg> Message identifiers, contacts and recipients</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="enforced reveal">
+      <strong>Enforced in the code, not promised in a policy.</strong>
+      There is no column anywhere in the database capable of holding a message
+      body, and no server to receive one — the app talks to Google and to
+      nothing else. The full detail is in the
+      <a href="privacy.html">privacy policy</a>.
+    </div>
+  </div>
+</section>
+
+<!-- ── Rights ────────────────────────────────────────────────────── -->
+<section class="alt">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Your rights</p>
+      <h2>Two articles do most of the work.</h2>
+      <p>
+        The GDPR already gives you these rights over every company in that
+        list. Reclaim's job is making them practical to use a hundred times
+        instead of once.
+      </p>
+    </div>
+
+    <div class="rights">
+      <div class="right-card reveal">
+        <span class="article">Article 15</span>
+        <h3>Right of access</h3>
+        <p>
+          Ask a company for everything it holds on you, where it got it, who
+          it has shared it with, and how long it intends to keep it. Most
+          people never find out; the right has existed the whole time.
+        </p>
+      </div>
+      <div class="right-card reveal">
+        <span class="article">Article 17</span>
+        <h3>Right to erasure</h3>
+        <p>
+          Require a company to delete your personal data when it no longer has
+          a reason to hold it — the account you opened once in 2017 to read
+          one article being a fairly clear example.
+        </p>
+      </div>
+    </div>
+
+    <div class="deadline reveal">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex:none"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      <span>
+        <b>One month to reply.</b> Article 12(3) gives a company a calendar
+        month to respond. Reclaim tracks that deadline for every request and
+        tells you who has run out of time.
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ── Close ─────────────────────────────────────────────────────── -->
+<section>
+  <div class="wrap">
+    <div class="close-band reveal">
+      <h2>Find out who's still holding on.</h2>
+      <p>
+        Reclaim runs on your own computer, reads your mail where it already
+        lives, and uploads none of it. Currently in testing.
+      </p>
+      <!-- Points at the Impressum rather than carrying an address in a
+           mailto: the contact details live there by law anyway, and a
+           button is the wrong place to publish one to scrapers. -->
+      <a class="btn btn-primary" href="impressum.html">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ────────────────────────────────────────────────────── -->
 <footer>
-  <p>GDPR Account Auditor is an independent tool. It is not affiliated with or endorsed by Google.</p>
-  <p>Nothing here is legal advice. The request templates are a starting point, not a guarantee of any outcome.</p>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <img class="logo-light" src="reclaim-logo.png" alt="Reclaim" width="440" height="146">
+        <img class="logo-dark" src="reclaim-logo-dark.png" alt="Reclaim" width="440" height="146">
+      </div>
+      <nav class="foot-links" aria-label="Legal">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+        <a href="nutzungsbedingungen.html">Nutzungsbedingungen</a>
+        <a href="privacy.html">Privacy policy</a>
+        <a href="terms.html">Terms of service</a>
+      </nav>
+    </div>
+    <p class="disclaimer">
+      Reclaim is an independent tool. It is not affiliated with or endorsed by
+      Google. Company names and logos are trademarks of their respective
+      owners, shown only to identify the companies holding your data. Nothing
+      here is legal advice — the request templates are a starting point, not a
+      guarantee of any outcome.
+    </p>
+  </div>
 </footer>
-</div>
+
+<script type="application/json" id="marks">[{"domain":"youtube.com","name":"YouTube","path":"M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z","hex":"#FF0000"},{"domain":"netflix.com","name":"Netflix","path":"m5.398 0 8.348 23.602c2.346.059 4.856.398 4.856.398L10.113 0H5.398zm8.489 0v9.172l4.715 13.33V0h-4.715zM5.398 1.5V24c1.873-.225 2.81-.312 4.715-.398V14.83L5.398 1.5z","hex":"#E50914"},{"domain":"spotify.com","name":"Spotify","path":"M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z","hex":"#1DB954"},{"domain":"instagram.com","name":"Instagram","path":"M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077","hex":"#E4405F"},{"domain":"steampowered.com","name":"Steam","path":"M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.663 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.253 0-2.265-1.014-2.265-2.265z","hex":"#000000"},{"domain":"paypal.com","name":"PayPal","path":"M15.607 4.653H8.941L6.645 19.251H1.82L4.862 0h7.995c3.754 0 6.375 2.294 6.473 5.513-.648-.478-2.105-.86-3.722-.86m6.57 5.546c0 3.41-3.01 6.853-6.958 6.853h-2.493L11.595 24H6.74l1.845-11.538h3.592c4.208 0 7.346-3.634 7.153-6.949a5.24 5.24 0 0 1 2.848 4.686M9.653 5.546h6.408c.907 0 1.942.222 2.363.541-.195 2.741-2.655 5.483-6.441 5.483H8.714Z","hex":"#00457C"},{"domain":"airbnb.com","name":"Airbnb","path":"M12.001 18.275c-1.353-1.697-2.148-3.184-2.413-4.457-.263-1.027-.16-1.848.291-2.465.477-.71 1.188-1.056 2.121-1.056s1.643.345 2.12 1.063c.446.61.558 1.432.286 2.465-.291 1.298-1.085 2.785-2.412 4.458zm9.601 1.14c-.185 1.246-1.034 2.28-2.2 2.783-2.253.98-4.483-.583-6.392-2.704 3.157-3.951 3.74-7.028 2.385-9.018-.795-1.14-1.933-1.695-3.394-1.695-2.944 0-4.563 2.49-3.927 5.382.37 1.565 1.352 3.343 2.917 5.332-.98 1.085-1.91 1.856-2.732 2.333-.636.344-1.245.558-1.828.609-2.679.399-4.778-2.2-3.825-4.88.132-.345.395-.98.845-1.961l.025-.053c1.464-3.178 3.242-6.79 5.285-10.795l.053-.132.58-1.116c.45-.822.635-1.19 1.351-1.643.346-.21.77-.315 1.246-.315.954 0 1.698.558 2.016 1.007.158.239.345.557.582.953l.558 1.089.08.159c2.041 4.004 3.821 7.608 5.279 10.794l.026.025.533 1.22.318.764c.243.613.294 1.222.213 1.858zm1.22-2.39c-.186-.583-.505-1.271-.9-2.094v-.03c-1.889-4.006-3.642-7.608-5.307-10.844l-.111-.163C15.317 1.461 14.468 0 12.001 0c-2.44 0-3.476 1.695-4.535 3.898l-.081.16c-1.669 3.236-3.421 6.843-5.303 10.847v.053l-.559 1.22c-.21.504-.317.768-.345.847C-.172 20.74 2.611 24 5.98 24c.027 0 .132 0 .265-.027h.372c1.75-.213 3.554-1.325 5.384-3.317 1.829 1.989 3.635 3.104 5.382 3.317h.372c.133.027.239.027.265.027 3.37.003 6.152-3.261 4.802-6.975z","hex":"#FF5A5F"},{"domain":"uber.com","name":"Uber","path":"M0 7.97v4.958c0 1.867 1.302 3.101 3 3.101.826 0 1.562-.316 2.094-.87v.736H6.27V7.97H5.082v4.888c0 1.257-.85 2.106-1.947 2.106-1.11 0-1.946-.827-1.946-2.106V7.971H0zm7.44 0v7.925h1.13v-.725c.521.532 1.257.86 2.06.86a3.006 3.006 0 0 0 3.034-3.01 3.01 3.01 0 0 0-3.033-3.024 2.86 2.86 0 0 0-2.049.861V7.971H7.439zm9.869 2.038c-1.687 0-2.965 1.37-2.965 3 0 1.72 1.334 3.01 3.066 3.01 1.053 0 1.913-.463 2.49-1.233l-.826-.611c-.43.577-.996.847-1.664.847-.973 0-1.753-.7-1.912-1.64h4.697v-.373c0-1.72-1.222-3-2.886-3zm6.295.068c-.634 0-1.098.294-1.381.758v-.713h-1.131v5.774h1.142V12.61c0-.894.544-1.47 1.291-1.47H24v-1.065h-.396zm-6.319.928c.85 0 1.564.588 1.756 1.47H15.52c.203-.882.916-1.47 1.765-1.47zm-6.732.012c1.086 0 1.98.883 1.98 2.004a1.993 1.993 0 0 1-1.98 2.001A1.989 1.989 0 0 1 8.56 13.02a1.99 1.99 0 0 1 1.992-2.004z","hex":"#000000"},{"domain":"ebay.com","name":"eBay","path":"M6.056 12.132v-4.92h1.2v3.026c.59-.703 1.402-.906 2.202-.906 1.34 0 2.828.904 2.828 2.855 0 .233-.015.457-.06.668.24-.953 1.274-1.305 2.896-1.344.51-.018 1.095-.018 1.56-.018v-.135c0-.885-.556-1.244-1.53-1.244-.72 0-1.245.3-1.305.81h-1.275c.136-1.29 1.5-1.62 2.686-1.62 1.064 0 1.995.27 2.415 1.02l-.436-.84h1.41l2.055 4.125 2.055-4.126H24l-3.72 7.305h-1.346l1.07-2.04-2.33-4.38c.13.255.2.555.2.93v2.46c0 .346.01.69.04 1.005H16.8a6.543 6.543 0 01-.046-.765c-.603.734-1.32.96-2.32.96-1.48 0-2.272-.78-2.272-1.695 0-.15.015-.284.037-.405-.3 1.246-1.36 2.086-2.767 2.086-.87 0-1.694-.315-2.2-.93 0 .24-.015.494-.04.734h-1.18c.02-.39.04-.855.04-1.245v-1.05h-4.83c.065 1.095.818 1.74 1.853 1.74.718 0 1.355-.3 1.568-.93h1.24c-.24 1.29-1.61 1.725-2.79 1.725C.95 15.009 0 13.822 0 12.232c0-1.754.982-2.91 3.116-2.91 1.688 0 2.93.886 2.94 2.806v.005zm9.137.183c-1.095.034-1.77.233-1.77.95 0 .465.36.97 1.305.97 1.26 0 1.935-.69 1.935-1.814v-.13c-.45 0-.99.006-1.484.022h.012zm-6.06 1.875c1.11 0 1.876-.806 1.876-2.02s-.768-2.02-1.893-2.02c-1.11 0-1.89.806-1.89 2.02s.765 2.02 1.875 2.02h.03zm-4.35-2.514c-.044-1.125-.854-1.546-1.725-1.546-.944 0-1.694.474-1.815 1.546z","hex":"#E53238"},{"domain":"dropbox.com","name":"Dropbox","path":"M6 1.807L0 5.629l6 3.822 6.001-3.822L6 1.807zM18 1.807l-6 3.822 6 3.822 6-3.822-6-3.822zM0 13.274l6 3.822 6.001-3.822L6 9.452l-6 3.822zM18 9.452l-6 3.822 6 3.822 6-3.822-6-3.822zM6 18.371l6.001 3.822 6-3.822-6-3.822L6 18.371z","hex":"#0061FF"},{"domain":"reddit.com","name":"Reddit","path":"M12 0C5.373 0 0 5.373 0 12c0 3.314 1.343 6.314 3.515 8.485l-2.286 2.286C.775 23.225 1.097 24 1.738 24H12c6.627 0 12-5.373 12-12S18.627 0 12 0Zm4.388 3.199c1.104 0 1.999.895 1.999 1.999 0 1.105-.895 2-1.999 2-.946 0-1.739-.657-1.947-1.539v.002c-1.147.162-2.032 1.15-2.032 2.341v.007c1.776.067 3.4.567 4.686 1.363.473-.363 1.064-.58 1.707-.58 1.547 0 2.802 1.254 2.802 2.802 0 1.117-.655 2.081-1.601 2.531-.088 3.256-3.637 5.876-7.997 5.876-4.361 0-7.905-2.617-7.998-5.87-.954-.447-1.614-1.415-1.614-2.538 0-1.548 1.255-2.802 2.803-2.802.645 0 1.239.218 1.712.585 1.275-.79 2.881-1.291 4.64-1.365v-.01c0-1.663 1.263-3.034 2.88-3.207.188-.911.993-1.595 1.959-1.595Zm-8.085 8.376c-.784 0-1.459.78-1.506 1.797-.047 1.016.64 1.429 1.426 1.429.786 0 1.371-.369 1.418-1.385.047-1.017-.553-1.841-1.338-1.841Zm7.406 0c-.786 0-1.385.824-1.338 1.841.047 1.017.634 1.385 1.418 1.385.785 0 1.473-.413 1.426-1.429-.046-1.017-.721-1.797-1.506-1.797Zm-3.703 4.013c-.974 0-1.907.048-2.77.135-.147.015-.241.168-.183.305.483 1.154 1.622 1.964 2.953 1.964 1.33 0 2.47-.81 2.953-1.964.057-.137-.037-.29-.184-.305-.863-.087-1.795-.135-2.769-.135Z","hex":"#FF4500"},{"domain":"figma.com","name":"Figma","path":"M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491zM12.735 7.51h3.117c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-3.117V7.51zm0 1.471H8.148c-2.476 0-4.49-2.014-4.49-4.49S5.672 0 8.148 0h4.588v8.981zm-4.587-7.51c-1.665 0-3.019 1.355-3.019 3.019s1.354 3.02 3.019 3.02h3.117V1.471H8.148zm4.587 15.019H8.148c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h4.588v8.98zM8.148 8.981c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h3.117V8.981H8.148zM8.172 24c-2.489 0-4.515-2.014-4.515-4.49s2.014-4.49 4.49-4.49h4.588v4.441c0 2.503-2.047 4.539-4.563 4.539zm-.024-7.51a3.023 3.023 0 0 0-3.019 3.019c0 1.665 1.365 3.019 3.044 3.019 1.705 0 3.093-1.376 3.093-3.068v-2.97H8.148zm7.704 0h-.098c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h.098c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.49-4.49 4.49zm-.097-7.509c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h.098c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-.098z","hex":"#F24E1E"},{"domain":"booking.com","name":"Booking.com","path":"M24 0H0v24h24ZM8.575 6.563h2.658c2.108 0 3.473 1.15 3.473 2.898 0 1.15-.575 1.82-.91 2.108l-.287.263.335.192c.815.479 1.318 1.389 1.318 2.395 0 1.988-1.51 3.257-3.857 3.257H7.449V7.713c0-.623.503-1.126 1.126-1.15zm1.7 1.868c-.479.024-.694.264-.694.79v1.893h1.676c.958 0 1.294-.743 1.294-1.365 0-.815-.503-1.318-1.318-1.318zm-.096 4.36c-.407.071-.598.31-.598.79v2.251h1.868c.934 0 1.509-.55 1.509-1.533 0-.934-.599-1.509-1.51-1.509zm7.737 2.394c.743 0 1.341.599 1.341 1.342a1.34 1.34 0 0 1-1.341 1.341 1.355 1.355 0 0 1-1.341-1.341c0-.743.598-1.342 1.34-1.342z","hex":"#003580"},{"domain":"etsy.com","name":"Etsy","path":"M8.559 2.445c0-.325.033-.52.59-.52h7.465c1.3 0 2.02 1.11 2.54 3.193l.42 1.666h1.27c.23-4.728.43-6.784.43-6.784s-3.196.36-5.09.36H6.635L1.521.196v1.37l1.725.326c1.21.24 1.5.496 1.6 1.606 0 0 .11 3.27.11 8.64 0 5.385-.09 8.61-.09 8.61 0 .973-.39 1.333-1.59 1.573l-1.722.33V24l5.13-.165h8.55c1.935 0 6.39.165 6.39.165.105-1.17.75-6.48.855-7.064h-1.2l-1.284 2.91c-1.005 2.28-2.476 2.445-4.11 2.445h-4.906c-1.63 0-2.415-.64-2.415-2.05V12.8s3.62 0 4.79.096c.912.064 1.463.325 1.76 1.598l.39 1.695h1.41l-.09-4.278.192-4.305h-1.391l-.45 1.89c-.283 1.244-.48 1.47-1.754 1.6-1.666.17-4.815.14-4.815.14V2.45h-.05z","hex":"#F16521"},{"domain":"discord.com","name":"Discord","path":"M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z","hex":"#5865F2"},{"domain":"strava.com","name":"Strava","path":"M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169","hex":"#FC4C02"}]</script>
+<script>
+(function () {
+  "use strict";
+
+  var calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ── Scroll reveals ──────────────────────────────────────────────
+     IntersectionObserver rather than a scroll handler: it does not run
+     on every frame, and it stops observing an element once shown. */
+  var targets = document.querySelectorAll(".reveal");
+  if (calm || !("IntersectionObserver" in window)) {
+    targets.forEach(function (el) { el.classList.add("shown"); });
+  } else {
+    var seen = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry, i) {
+        if (!entry.isIntersecting) return;
+        // Stagger siblings so a row of cards arrives as a sequence
+        // rather than a single block.
+        setTimeout(function () { entry.target.classList.add("shown"); }, i * 90);
+        seen.unobserve(entry.target);
+      });
+    }, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
+    targets.forEach(function (el) { seen.observe(el); });
+  }
+
+  /* ── Count-up figures ────────────────────────────────────────────*/
+  function countUp(el, to) {
+    if (calm) { el.textContent = String(to); return; }
+    var started = null, ms = 1300;
+    function frame(now) {
+      if (started === null) started = now;
+      var t = Math.min((now - started) / ms, 1);
+      // Ease out, so it decelerates into the final number instead of
+      // stopping dead.
+      el.textContent = String(Math.round(to * (1 - Math.pow(1 - t, 3))));
+      if (t < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  var figures = document.querySelectorAll("[data-count]");
+  if (!("IntersectionObserver" in window)) {
+    figures.forEach(function (el) { countUp(el, +el.dataset.count); });
+  } else {
+    var counting = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        countUp(entry.target, +entry.target.dataset.count);
+        counting.unobserve(entry.target);
+      });
+    }, { threshold: 0.5 });
+    figures.forEach(function (el) { counting.observe(el); });
+  }
+
+  /* ── The app window ──────────────────────────────────────────────
+     Rows arrive one at a time the way they do during a real scan, and
+     the counter climbs with them. */
+  var marks = JSON.parse(document.getElementById("marks").textContent);
+  var rows = document.getElementById("rows");
+  var counter = document.getElementById("counter");
+  var YEARS = [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
+
+  function light(hex) {
+    var n = parseInt(hex.slice(1), 16);
+    // Rec. 601 luma: white text on a pale brand colour is unreadable.
+    return (((n >> 16) * 299 + ((n >> 8) & 255) * 587 + (n & 255) * 114) / 1000) > 150;
+  }
+
+  function build(mark, index) {
+    var row = document.createElement("div");
+    row.className = "row";
+
+    var tile = document.createElement("span");
+    tile.className = "row-mark";
+    tile.style.background = mark.hex;
+    tile.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="' + (light(mark.hex) ? "#14143C" : "#ffffff") +
+      '"><path d="' + mark.path + '"/></svg>';
+
+    var text = document.createElement("div");
+    text.innerHTML =
+      '<div class="row-name"></div><div class="row-domain"></div>';
+    text.querySelector(".row-name").textContent = mark.name;
+    text.querySelector(".row-domain").textContent = mark.domain;
+
+    var when = document.createElement("span");
+    when.className = "row-when";
+    when.textContent = "since " + YEARS[index % YEARS.length];
+
+    row.appendChild(tile);
+    row.appendChild(text);
+    row.appendChild(when);
+    return row;
+  }
+
+  // Six at a time: enough to read as a list, few enough to fit beside
+  // the headline on a laptop without scrolling.
+  var VISIBLE = 6;
+  var at = 0;
+
+  function fill() {
+    rows.textContent = "";
+    for (var i = 0; i < VISIBLE; i++) {
+      var mark = marks[(at + i) % marks.length];
+      var row = build(mark, at + i);
+      rows.appendChild(row);
+      if (calm) { row.classList.add("in"); continue; }
+      (function (el, delay) {
+        setTimeout(function () { el.classList.add("in"); }, delay);
+      })(row, i * 130);
+    }
+    at = (at + VISIBLE) % marks.length;
+  }
+
+  fill();
+  countUp(counter, 213);
+  if (!calm) {
+    // Long enough that the list can be read before it turns over.
+    setInterval(fill, 5200);
+  }
+})();
+</script>
 </body>
 </html>
