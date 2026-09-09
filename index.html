@@ -30,7 +30,10 @@
     </nav>
 
     <div class="hero-grid">
-      <div>
+      <!-- Becomes display:contents on a phone so its children join the
+           hero grid directly and the app window can be ordered up between
+           the copy and the buttons. See .hero-copy in landing.css. -->
+      <div class="hero-copy">
         <p class="eyebrow">GDPR account auditor</p>
         <h1>Every company you've forgotten <span class="grad">still has your data</span>.</h1>
         <p class="hero-lede">
@@ -243,12 +246,9 @@
       <h2>Find out who's still holding on.</h2>
       <p>
         Reclaim runs on your own computer, reads your mail where it already
-        lives, and uploads none of it. Currently in testing.
+        lives, and uploads none of it.
       </p>
-      <!-- Points at the Impressum rather than carrying an address in a
-           mailto: the contact details live there by law anyway, and a
-           button is the wrong place to publish one to scrapers. -->
-      <a class="btn btn-primary" href="impressum.html">Get in touch</a>
+      <p class="close-status">Currently in testing</p>
     </div>
   </div>
 </section>

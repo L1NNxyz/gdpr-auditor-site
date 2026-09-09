@@ -139,6 +139,26 @@ p { margin: 0; }
   .hero-grid { grid-template-columns: 1fr 1fr; gap: 4rem; }
 }
 
+/* On one column the app window sat under the copy, the buttons and the
+   note -- entirely below the fold on a phone, and the "See how it works"
+   button scrolled straight past the one thing worth seeing.
+ *
+ * display:contents dissolves this wrapper so its children become grid
+ * items in their own right, which lets the window be ordered up between
+ * the sentence that sets it up and the buttons that follow it. DOM order
+ * is unchanged, and the window is not focusable, so tab order and screen
+ * reader order are unaffected. */
+@media (max-width: 61.99rem) {
+  .hero-copy { display: contents; }
+  .hero-grid { gap: 1.5rem; }
+  .eyebrow { order: 1; }
+  .hero h1 { order: 2; }
+  .hero-lede { order: 3; margin-bottom: .25rem; }
+  .window { order: 4; }
+  .cta-row { order: 5; }
+  .hero-note { order: 6; margin-top: .1rem; }
+}
+
 .hero h1 {
   font-size: clamp(2.3rem, 7.5vw, 3.9rem);
   font-weight: 800;
@@ -419,11 +439,30 @@ footer img { width: 128px; height: auto; display: block; margin-bottom: .8rem; }
   .hero::after { top: 1rem; right: -13rem; }
 
   .hero { padding-bottom: 3.5rem; }
-  .hero-nav { padding-bottom: 2.25rem; }
+  .hero-nav { padding-bottom: 1.75rem; }
   .hero h1 { font-size: clamp(2.1rem, 8.6vw, 3rem); }
   .hero-lede { font-size: 1.02rem; }
   .section-head { margin-bottom: 2rem; }
   .section-head h2 { font-size: clamp(1.55rem, 6.4vw, 2.1rem); }
+
+  /* Every row of the list earned back here is one more the visitor sees
+     before having to scroll, and the list is the point of the window. */
+  .window-body { padding: .8rem .7rem .9rem; }
+  .counter-row { padding-bottom: .6rem; }
+  .counter { font-size: 1.75rem; }
+  .counter-label { font-size: .76rem; }
+  .row { padding: .42rem .45rem; }
+  .row-mark { width: 27px; height: 27px; border-radius: 7px; }
+}
+
+.close-status {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-size: .82rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--teal);
+}
+.close-status::before {
+  content: ""; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--teal);
 }
 
 /* Three stacked squares cost most of a screen each and say very little.
